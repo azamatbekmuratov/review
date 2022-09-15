@@ -2,15 +2,16 @@ package com.bekmuratov.review.service.impl;
 
 import com.bekmuratov.review.domain.dto.ProductReviewDto;
 import com.bekmuratov.review.domain.model.ProductReview;
+import com.bekmuratov.review.exception.ReviewByProductIdNotFoundException;
 import com.bekmuratov.review.repository.ProductReviewRepository;
-import com.bekmuratov.review.service.api.ReviewService;
+import com.bekmuratov.review.service.api.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class ReviewServiceImpl implements ReviewService {
+public class ReviewService implements IReviewService {
 
     @Autowired
     ProductReviewRepository reviewRepository;
@@ -18,7 +19,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ProductReviewDto findReviewByProductId(String productId) {
         Optional<ProductReview> productReview = reviewRepository.findByProductId(productId);
-        return productReview.map(this::mapModelToDto).orElse(null);
+        return productReview.map(this::mapModelToDto).orElseThrow(() -> new ReviewByProductIdNotFoundException(productId));
     }
 
     ProductReviewDto mapModelToDto(ProductReview model){
