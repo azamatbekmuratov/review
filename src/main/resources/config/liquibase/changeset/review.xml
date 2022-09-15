@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <changeSet  id="1" author="bekmuratov" runOnChange="false">
+        <createSequence sequenceName="product_review_seq"/>
+        <createTable tableName="product_review">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="VARCHAR(255)"/>
+            <column name="average_review_score" type="BIGINT"/>
+            <column name="number_of_reviews" type="BIGINT"/>
+        </createTable>
+
+        <loadData
+                file="classpath:config/liquibase/changeset/load_review.csv"
+                tableName="product_review">
+        </loadData>
+    </changeSet>
+
+    <changeSet id="2" author="bekmuratov">
+        <sql dbms="postgresql">select setval('product_review_seq', max(id)+1) from product_review</sql>
+        <sql dbms="h2">alter sequence product_review_seq restart with (select max(id)+1 from product_review)</sql>
+    </changeSet>
+
+</databaseChangeLog>

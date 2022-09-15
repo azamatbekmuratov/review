@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: review-service
+  profiles:
+    active: stage
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/review_db?ApplicationName=${spring.application.name}
+    username: postgres
+    password: postgres
+    hikari:
+      auto-commit: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    database: POSTGRESQL
+    show-sql: false
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.generate_statistics: false
+      hibernate.jdbc.lob.non_contextual_creation: true
+  liquibase:
+    contexts: stage
+    drop-first: true
+server:
+  port: 8000
