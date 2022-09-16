@@ -3,9 +3,11 @@ package com.bekmuratov.review.service.impl;
 import com.bekmuratov.review.domain.dto.Operation;
 import com.bekmuratov.review.domain.dto.ProductReviewDto;
 import com.bekmuratov.review.domain.dto.SuccessCreateResponse;
+import com.bekmuratov.review.domain.dto.SuccessOperation;
 import com.bekmuratov.review.domain.model.ProductReview;
 import com.bekmuratov.review.exception.DatabaseOperationException;
 import com.bekmuratov.review.exception.ReviewByProductIdNotFoundException;
+import com.bekmuratov.review.exception.ReviewNotFoundException;
 import com.bekmuratov.review.repository.ProductReviewRepository;
 import com.bekmuratov.review.service.api.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,20 @@ public class ReviewService implements IReviewService {
             throw new DatabaseOperationException(ex);
         }
         return null;
+    }
+
+    @Override
+    public SuccessOperation update(ProductReviewDto input) {
+        if (input.getId() == null) {
+            throw new ReviewNotFoundException(input.getId());
+        }
+        Optional<ProductReview> entity = reviewRepository.findById(input.getId());
+        if (entity.isPresent()) {
+            reviewRepository.save(mapDtoToModel(input));
+        } else {
+            throw new ReviewNotFoundException(input.getId());
+        }
+        return new SuccessOperation("200", Operation.SUCCESS.toString());
     }
 
     ProductReviewDto mapModelToDto(ProductReview model){

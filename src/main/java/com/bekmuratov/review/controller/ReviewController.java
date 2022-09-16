@@ -2,6 +2,7 @@ package com.bekmuratov.review.controller;
 
 import com.bekmuratov.review.domain.dto.ProductReviewDto;
 import com.bekmuratov.review.domain.dto.SuccessCreateResponse;
+import com.bekmuratov.review.domain.dto.SuccessOperation;
 import com.bekmuratov.review.service.api.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class ReviewController {
     @PostMapping("/product")
     public ResponseEntity<?> create(@RequestBody ProductReviewDto review){
         SuccessCreateResponse response = reviewService.save(review);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/product")
+    public ResponseEntity<?> update(@RequestBody ProductReviewDto review){
+        SuccessOperation response = reviewService.update(review);
         return ResponseEntity.ok(response);
     }
 
