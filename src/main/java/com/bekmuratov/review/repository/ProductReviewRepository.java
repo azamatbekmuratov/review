@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface ProductReviewRepository extends JpaRepository<ProductReview, Long> {
     Optional<ProductReview> findById(Long id);
     Optional<ProductReview> findByProductId(String productId);
+
+    Integer save(ProductReview input);
 }
