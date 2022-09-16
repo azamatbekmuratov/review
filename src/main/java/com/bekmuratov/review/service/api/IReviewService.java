@@ -10,4 +10,6 @@ public interface IReviewService {
     SuccessCreateResponse save(ProductReviewDto input);
 
     SuccessOperation update(ProductReviewDto input);
+
+    SuccessOperation delete(Long id);
 }

@@ -54,6 +54,17 @@ public class ReviewService implements IReviewService {
         return new SuccessOperation("200", Operation.SUCCESS.toString());
     }
 
+    @Override
+    public SuccessOperation delete(Long id) {
+        Optional<ProductReview> entity = reviewRepository.findById(id);
+        if (entity.isPresent()) {
+            reviewRepository.delete(entity.get());
+        } else {
+            throw new ReviewNotFoundException(id);
+        }
+        return new SuccessOperation("200", Operation.SUCCESS.toString());
+    }
+
     ProductReviewDto mapModelToDto(ProductReview model){
         if (model == null) {
             return null;

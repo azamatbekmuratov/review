@@ -36,4 +36,10 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/product/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        SuccessOperation response = reviewService.delete(id);
+        return ResponseEntity.ok(response);
+    }
+
 }
