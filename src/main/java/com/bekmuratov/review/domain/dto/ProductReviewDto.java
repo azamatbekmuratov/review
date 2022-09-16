@@ -1,7 +1,10 @@
 package com.bekmuratov.review.domain.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class ProductReviewDto {
     private Long id;
+    @NotNull
     private String productId;
     private Integer averageReviewScore;
     private Integer numberOfReviews;
