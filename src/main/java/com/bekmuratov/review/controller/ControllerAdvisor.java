@@ -1,5 +1,6 @@
 package com.bekmuratov.review.controller;
 
+import com.bekmuratov.review.exception.DatabaseOperationException;
 import com.bekmuratov.review.exception.ReviewByProductIdNotFoundException;
 import com.bekmuratov.review.exception.ReviewNotFoundException;
 import org.springframework.dao.DataAccessException;
@@ -47,7 +48,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({SQLException.class, DataAccessException.class})
+    @ExceptionHandler({SQLException.class, DataAccessException.class, DatabaseOperationException.class})
     public ResponseEntity<Object> handleDatabaseException(
             ReviewNotFoundException ex, WebRequest request) {
 
