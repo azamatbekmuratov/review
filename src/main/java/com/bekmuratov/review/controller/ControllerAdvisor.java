@@ -52,7 +52,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
-        body.put("status", status.value());
+        body.put("code", status.value());
 
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
