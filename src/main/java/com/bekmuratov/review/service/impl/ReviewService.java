@@ -11,6 +11,7 @@ import com.bekmuratov.review.exception.ReviewNotFoundException;
 import com.bekmuratov.review.repository.ProductReviewRepository;
 import com.bekmuratov.review.service.api.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class ReviewService implements IReviewService {
     ProductReviewRepository reviewRepository;
 
     @Override
+    @Cacheable(value = "reviews", key = "#productId")
     public ProductReviewDto findReviewByProductId(String productId) {
         Optional<ProductReview> productReview = reviewRepository.findByProductId(productId);
         return productReview.map(this::mapModelToDto).orElseThrow(() -> new ReviewByProductIdNotFoundException(productId));

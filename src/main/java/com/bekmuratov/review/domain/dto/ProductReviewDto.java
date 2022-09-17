@@ -1,8 +1,9 @@
 package com.bekmuratov.review.domain.dto;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class ProductReviewDto {
+public class ProductReviewDto implements Serializable {
     private Long id;
     @NotNull
     private String productId;
