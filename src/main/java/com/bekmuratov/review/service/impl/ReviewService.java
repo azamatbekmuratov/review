@@ -23,7 +23,14 @@ public class ReviewService implements IReviewService {
     ProductReviewRepository reviewRepository;
 
     @Override
-    @Cacheable(value = "reviews", key = "#productId")
+    @Cacheable(value = "reviews", key = "#id")
+    public ProductReviewDto findReviewById(Long id) {
+        Optional<ProductReview> productReview = reviewRepository.findById(id);
+        return productReview.map(this::mapModelToDto).orElseThrow(() -> new ReviewNotFoundException(id));
+    }
+
+    @Override
+    @Cacheable(value = "reviewsByProductId", key = "#productId")
     public ProductReviewDto findReviewByProductId(String productId) {
         Optional<ProductReview> productReview = reviewRepository.findByProductId(productId);
         return productReview.map(this::mapModelToDto).orElseThrow(() -> new ReviewByProductIdNotFoundException(productId));

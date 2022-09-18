@@ -12,31 +12,37 @@ import org.springframework.web.bind.annotation.*;
  * @author Azamat Bekmuratov
  */
 @RestController
-@RequestMapping("/api/review/v1")
+@RequestMapping("/api/reviews/v1")
 public class ReviewController {
 
     @Autowired
     private IReviewService reviewService;
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/review/{id}")
+    public ResponseEntity<?> findReviewById(@PathVariable Long id){
+        ProductReviewDto productReviewDto = reviewService.findReviewById(id);
+        return ResponseEntity.ok(productReviewDto);
+    }
+
+    @GetMapping("/review/product/{productId}")
     public ResponseEntity<?> findReviewByProductId(@PathVariable String productId){
         ProductReviewDto productReviewDto = reviewService.findReviewByProductId(productId);
         return ResponseEntity.ok(productReviewDto);
     }
 
-    @PostMapping("/product")
+    @PostMapping("/review")
     public ResponseEntity<?> create(@RequestBody ProductReviewDto review){
         SuccessCreateResponse response = reviewService.save(review);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/product")
+    @PutMapping("/review")
     public ResponseEntity<?> update(@RequestBody ProductReviewDto review){
         SuccessOperation response = reviewService.update(review);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/product/{id}")
+    @PutMapping("/review/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         SuccessOperation response = reviewService.delete(id);
         return ResponseEntity.ok(response);

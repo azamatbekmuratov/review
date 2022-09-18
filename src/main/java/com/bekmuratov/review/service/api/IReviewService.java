@@ -5,6 +5,7 @@ import com.bekmuratov.review.domain.dto.SuccessCreateResponse;
 import com.bekmuratov.review.domain.dto.SuccessOperation;
 
 public interface IReviewService {
+    ProductReviewDto findReviewById(Long id);
     ProductReviewDto findReviewByProductId(String productId);
 
     SuccessCreateResponse save(ProductReviewDto input);
