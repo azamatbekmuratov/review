@@ -1,0 +1,27 @@
+version: '3'
+services:
+  postgresql:
+    container_name: review_db_postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./setup.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - ./postgres/data:/var/lib/postgresql/data
+  cache:
+    container_name: review_cache_db_redis
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+  review-service:
+    build: .
+    image: review-service:test
+    container_name: review-service
+    restart: on-failure
+    network_mode: host
