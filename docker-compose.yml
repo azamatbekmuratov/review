@@ -23,4 +23,5 @@ services:
     image: review-service:test
     container_name: review-service
     restart: on-failure
-    network_mode: host
+    ports:
+      - '8000:8000'

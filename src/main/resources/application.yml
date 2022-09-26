@@ -5,7 +5,7 @@ spring:
     active: stage
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/review_db?ApplicationName=${spring.application.name}
+    url: jdbc:postgresql://base_host:5432/review_db?ApplicationName=${spring.application.name}
     username: postgres
     password: postgres
     hikari:
@@ -26,7 +26,7 @@ spring:
     type: redis
   redis:
     database: 0
-    host: localhost
+    host: base_host
     port: 6379
     timeout: 60000
 server:

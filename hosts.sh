@@ -1,0 +1,1 @@
+echo '192.168.0.103 base_host' | sudo tee -a /private/etc/hosts
