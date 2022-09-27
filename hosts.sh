@@ -1,1 +1,1 @@
-echo '192.168.0.103 base_host' | sudo tee -a /private/etc/hosts
+echo '172.31.1.34 base_host' | sudo tee -a /private/etc/hosts
