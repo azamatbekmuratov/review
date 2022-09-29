@@ -13,8 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -56,5 +55,44 @@ public class ReviewControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(review))
                         .header("Authorization", "Basic YWRtaW46YXphbWF0"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenReviewWhenReviewDelete_thenStatus200() throws Exception {
+
+        mockMvc.perform(delete("/api/reviews/v1/review/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic YWRtaW46YXphbWF0"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenReviewWhenReviewUpdate_thenStatus200() throws Exception {
+        ProductReviewDto review = new ProductReviewDto();
+        review.setId(2L);
+        review.setProductId("ABC123");
+        review.setNumberOfReviews(2);
+        review.setAverageReviewScore(3);
+
+        mockMvc.perform(put("/api/reviews/v1/review")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(review))
+                        .header("Authorization", "Basic YWRtaW46YXphbWF0"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenReviewWhenReviewUpdateReviewNotFound_thenStatus404() throws Exception {
+        ProductReviewDto review = new ProductReviewDto();
+        review.setId(22L);
+        review.setProductId("ABC123");
+        review.setNumberOfReviews(2);
+        review.setAverageReviewScore(3);
+
+        mockMvc.perform(put("/api/reviews/v1/review")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(review))
+                        .header("Authorization", "Basic YWRtaW46YXphbWF0"))
+                .andExpect(status().isNotFound());
     }
 }

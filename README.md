@@ -18,6 +18,11 @@ Review service. Fetches review of product by product id. Uses caching mechanism 
 2. Type in terminal make build-run
 3. Need to create manually the database inside postgres docker container. Did not write bash script for that. CREATE DATABASE review_db;
 
+## How to run tests using Makefile
+
+1. Redis has to be configured from given docker-compose file
+2. Type in terminal make test
+
 
 ## How to use it
 ### Review for products
