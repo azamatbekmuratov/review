@@ -92,7 +92,9 @@ public class ReviewService implements IReviewService {
             return null;
         }
         ProductReview model = new ProductReview();
-        model.setId(dto.getId());
+        if (dto.getId() != null) {
+            model.setId(dto.getId());
+        }
         model.setProductId(dto.getProductId());
         model.setNumberOfReviews(dto.getNumberOfReviews());
         model.setAverageReviewScore(dto.getAverageReviewScore());
